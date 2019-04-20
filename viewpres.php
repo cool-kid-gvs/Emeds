@@ -6,7 +6,7 @@ if(!isset($_GET['pr_id']) || $_GET['pr_id'] == '') {
 }
 $pr_id = $_GET['pr_id'];
 //Get all the details from pr_id
-$query = "SELECT * FROM Prescriptions WHERE pr_id='$pr_id'";
+$query = "SELECT * FROM prescriptionss WHERE pr_id='$pr_id'";
 $result = mysqli_query($conn,$query);
 $pres = mysqli_fetch_array($result);
 //get the p_id

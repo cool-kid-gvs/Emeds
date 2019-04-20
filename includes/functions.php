@@ -3,8 +3,8 @@
 /*
 * Filename - functions.php
 * Purpose - Contain all the core functionality of the web app
-* Author - Pavitra Behre
-* Contact - http://pbehre.in
+* Author - Gaurav Sukhatme
+* Contact - sukhatmegaurav@gmail.com
 */
 ini_set("display_errors", "1"); // Should be disabled in production, disabled in remote server
 ob_start();
@@ -18,9 +18,9 @@ $username = "root";
 $password = "";
 $dbname = "emeds";
 //Include Way2SMS API wrapper
-include('way2sms-api.php');
+// include('way2sms-api.php');
 //initializing sms engine
-$sms = new WAY2SMSClient();
+// $sms = new WAY2SMSClient();
 //fuction to send SMS via Way2SMS
 function sendSMS($mobile, $msg) {
     global $sms;
@@ -30,8 +30,10 @@ function sendSMS($mobile, $msg) {
     $sms->logout();
 }
  function gvsSendSMS($mobile, $msg){
-
-    // $json = file_get_contents("https://smsapi.engineeringtgr.com/send/?Mobile=8224844487&Password=gaurav10&Message=".urlencode($msg)."&To=".urlencode($mobile)."&Key=sukhavcUlE2qsufgyiNhXIKnHw7m");
+    $mobile= $mobile;
+    $message= $msg;
+    echo "ye h ".$msg;
+    $json = json_decode(file_get_contents("https://smsapi.engineeringtgr.com/send/?Mobile=9630179950&Password=999hrm90&Message=".urlencode($message)."&To=".urlencode($mobile)."&Key=hrishhVEsnp628d3FAKW0vfli4j"),true);
     // if ($json["status"]==="success") {
     //     echo $json["msg"];
     //     //your code when send success
@@ -39,18 +41,6 @@ function sendSMS($mobile, $msg) {
     //     echo $json["msg"];
     //     //your code when not send
     // }
-
-    // $json = file_get_contents("https://smsapi.engineeringtgr.com/send/?Mobile=8224844487&Password=gaurav10&Message=hello&To=8224844487&Key=sukhavcUlE2qsufgyiNhXIKnHw7m");
-    $mobile= $mobile;
-    $message= $msg;
-    $json = json_decode(file_get_contents("https://smsapi.engineeringtgr.com/send/?Mobile=8224844487&Password=gaurav10&Message=".urlencode($message)."&To=".urlencode($mobile)."&Key=sukhavcUlE2qsufgyiNhXIKnHw7m"),true);
-    if ($json["status"]==="success") {
-        echo $json["msg"];
-        //your code when send success
-    }else{
-        echo $json["msg"];
-        //your code when not send
-    }
  }
 
 // Create connection
@@ -425,7 +415,7 @@ function getDoctorCount() {
 }
 function getPresCount() {
     global $conn;
-    $query = "SELECT * FROM Prescriptions";
+    $query = "SELECT * FROM prescriptions";
     $result = mysqli_query($conn, $query);
     return mysqli_num_rows($result);
 }
@@ -433,7 +423,7 @@ function getPresCount() {
 //function to generate prescription list via doc_id - doctor.php
 function genPresListDoc($doc_id){
     global $conn;
-    $query = "SELECT pr_id, patients.name 'p_name', doctors.name 'd_name', date_created FROM `prescriptions`,`doctors`,`patients` WHERE Prescriptions.p_id = patients.p_id AND Prescriptions.doc_id = doctors.doc_id AND Prescriptions.doc_id = '$doc_id'";
+    $query = "SELECT pr_id, patients.name 'p_name', doctors.name 'd_name', date_created FROM `prescriptions`,`doctors`,`patients` WHERE prescriptions.p_id = patients.p_id AND prescriptions.doc_id = doctors.doc_id AND prescriptions.doc_id = '$doc_id'";
     $result = mysqli_query($conn, $query);
     echo '<table class="table table-hover" id="datatable2">';
     echo '<thead>';
@@ -471,7 +461,7 @@ function genPresListDoc($doc_id){
 //function to generate prescription list via p_id - patient.php
 function genPresListPatient($p_id) {
     global $conn;
-    $query = "SELECT pr_id, patients.name 'p_name', doctors.name 'd_name', date_created FROM `Prescriptions`,`doctors`,`patients` WHERE Prescriptions.p_id = patients.p_id AND Prescriptions.doc_id = doctors.doc_id AND Prescriptions.p_id = '$p_id'";
+    $query = "SELECT pr_id, patients.name 'p_name', doctors.name 'd_name', date_created FROM `prescriptions`,`doctors`,`patients` WHERE prescriptions.p_id = patients.p_id AND prescriptions.doc_id = doctors.doc_id AND prescriptions.p_id = '$p_id'";
     $result = mysqli_query($conn, $query);
     echo '<table class="table table-hover" id="datatable">';
     echo '<thead>';
@@ -581,19 +571,21 @@ function addPres($p_id, $doc_id, $date_created, $json, $w_id) {
     $qrcode = md5($pr_id);
     $arr_name = $pr_id.'.json';
     global $conn;
-    $query = "INSERT INTO `Prescriptions`(`pr_id`, `p_id`, `doc_id`, `qrcode`, `arr_name`, `date_created`) VALUES ('$pr_id', '$p_id', '$doc_id', '$qrcode', '$arr_name', '$date_created')";
+    $query = "INSERT INTO `prescriptions`(`pr_id`, `p_id`, `doc_id`, `qrcode`, `arr_name`, `date_created`) VALUES ('$pr_id', '$p_id', '$doc_id', '$qrcode', '$arr_name', '$date_created')";
     if(mysqli_query($conn,$query)) {
         //INSERT query returns true
         //Write the prescription file
-        file_put_contents('./data/prescriptions/'.$arr_name, $json);
+        file_put_contents('data/prescriptions/'.$arr_name, $json);
         $q = "SELECT phone FROM patients WHERE p_id='$p_id'";
         $re = mysqli_query($conn, $q);
         $r = mysqli_fetch_array($re);
-        $mobile = $r['phone'];
-        $msg = "Prescription created. ID - ".$pr_id." . View at 192.168.1.5/gvstryphp/web/viewpres.php?pr_id=".$pr_id;
-        gvsSendSMS($mobile, $msg);
-        // echo '<script>window.open("viewpres.php?pr_id='.$pr_id.'", "_blank");alert("Prescription Created");</script>';
-        // discardWL($w_id);
+        $phone = $r['phone'];
+        $msg = "Prescription created ID ".$pr_id.". View at 192.168.1.5/gvstryphp/web/viewpres.php?pr_id=".$pr_id;
+        // $msg=urlencode('prescription '.$pr_id.' View at 192.168.1.5/gvstryphp/web/viewpres.php?pr_id= '.$pr_id);
+        // $msg="tumaddhogye";
+        gvsSendSMS($phone, $msg);
+        echo '<script>window.open("viewpres.php?pr_id='.$pr_id.'", "_blank");alert("Prescription Created");</script>';
+        discardWL($w_id);
     } else {
         echo '<script>alert("INSERT FAILED");</script>';
     }

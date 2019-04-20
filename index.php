@@ -23,6 +23,6 @@ if($type == 'doctor') {
         "status" => "ERROR",
         "msg" => "type not set",
         "fix" => "Please login again",
-        "contact" => "me@pbehre.in"
+        "contact" => "sukhatmegaurav@gmail.com"
     ));
 }
