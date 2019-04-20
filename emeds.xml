@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.8.4
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1:3306
+- Generation Time: Apr 20, 2019 at 11:40 AM
+- Server version: 5.7.24
+- PHP Version: 7.2.14
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="emeds" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="doctors">
+                CREATE TABLE `doctors` (
+                  `doc_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `user` varchar(128) DEFAULT NULL,
+                  `pass` varchar(128) DEFAULT NULL,
+                  `name` varchar(128) DEFAULT NULL,
+                  `email` varchar(128) DEFAULT NULL,
+                  `venue` varchar(128) DEFAULT NULL,
+                  `venue_add` varchar(128) DEFAULT NULL,
+                  `room` int(128) DEFAULT NULL,
+                  `qualification` varchar(128) DEFAULT NULL,
+                  `phone` varchar(128) DEFAULT NULL,
+                  `speciality` varchar(128) DEFAULT NULL,
+                  `h_id` int(128) DEFAULT NULL,
+                  PRIMARY KEY (`doc_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="hospital">
+                CREATE TABLE `hospital` (
+                  `h_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `user` varchar(128) DEFAULT NULL,
+                  `pass` varchar(128) DEFAULT NULL,
+                  `name` varchar(128) DEFAULT NULL,
+                  `address` varchar(256) DEFAULT NULL,
+                  `arr_doc` varchar(256) DEFAULT NULL,
+                  `phone` varchar(128) DEFAULT NULL,
+                  `email` varchar(256) DEFAULT NULL,
+                  PRIMARY KEY (`h_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="medicines">
+                CREATE TABLE `medicines` (
+                  `m_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(128) DEFAULT NULL,
+                  `salt` varchar(128) DEFAULT NULL,
+                  `price` int(128) DEFAULT NULL,
+                  PRIMARY KEY (`m_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="patients">
+                CREATE TABLE `patients` (
+                  `p_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `user` varchar(128) NOT NULL,
+                  `pass` varchar(128) NOT NULL,
+                  `name` varchar(256) NOT NULL,
+                  `email` varchar(256) NOT NULL,
+                  `address` varchar(256) NOT NULL,
+                  `phone` varchar(128) NOT NULL,
+                  `age` int(128) NOT NULL,
+                  `wt` int(128) NOT NULL,
+                  `sex` tinyint(128) NOT NULL,
+                  `aadhar` int(255) NOT NULL,
+                  PRIMARY KEY (`p_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=769594 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="prescriptions">
+                CREATE TABLE `prescriptions` (
+                  `pr_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `p_id` int(128) NOT NULL,
+                  `doc_id` int(128) NOT NULL,
+                  `qrcode` varchar(256) NOT NULL,
+                  `arr_name` varchar(128) NOT NULL,
+                  `date_created` datetime NOT NULL,
+                  PRIMARY KEY (`pr_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=996114 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="stores">
+                CREATE TABLE `stores` (
+                  `s_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(128) DEFAULT NULL,
+                  `address` varchar(128) DEFAULT NULL,
+                  `LAT` varchar(128) DEFAULT NULL,
+                  `LON` varchar(128) DEFAULT NULL,
+                  `arr_med` varchar(256) DEFAULT NULL,
+                  `phone` varchar(128) DEFAULT NULL,
+                  `homedelivery` int(10) DEFAULT NULL,
+                  PRIMARY KEY (`s_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="waitlist">
+                CREATE TABLE `waitlist` (
+                  `w_id` int(128) NOT NULL AUTO_INCREMENT,
+                  `h_id` int(128) DEFAULT NULL,
+                  `doc_id` int(128) DEFAULT NULL,
+                  `p_id` int(128) DEFAULT NULL,
+                  PRIMARY KEY (`w_id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'emeds'
+    -->
+    <database name="emeds">
+        <!-- Table doctors -->
+        <table name="doctors">
+            <column name="doc_id">1</column>
+            <column name="user">john</column>
+            <column name="pass">527BD5B5D689E2C32AE974C6229FF785</column>
+            <column name="name">John Watson</column>
+            <column name="email">sukhatmegaurav@gmail.com</column>
+            <column name="venue">Swatik Hospital</column>
+            <column name="venue_add">Jabalpur</column>
+            <column name="room">1</column>
+            <column name="qualification">MBBS</column>
+            <column name="phone">8224844487</column>
+            <column name="speciality">neurollogist</column>
+            <column name="h_id">1</column>
+        </table>
+        <!-- Table hospital -->
+        <table name="hospital">
+            <column name="h_id">1</column>
+            <column name="user">hospital</column>
+            <column name="pass">8B42A1C9B8F9FDE869F83C954B3D463B</column>
+            <column name="name">City Hospital</column>
+            <column name="address">Aaga Chowk, Near Aaga Shah Dargaah, Baldeo Bag, Jabalpur, Madhya Pradesh 482002</column>
+            <column name="arr_doc">John</column>
+            <column name="phone">8224844487</column>
+            <column name="email">gauravsukhatme@hotmail.com</column>
+        </table>
+        <!-- Table medicines -->
+        <table name="medicines">
+            <column name="m_id">1</column>
+            <column name="name">Celexa</column>
+            <column name="salt">Citalopram</column>
+            <column name="price">10</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">2</column>
+            <column name="name">Paracetamol</column>
+            <column name="salt">Acetaminophen</column>
+            <column name="price">8</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">3</column>
+            <column name="name">Nalfon</column>
+            <column name="salt">Fenoprofen</column>
+            <column name="price">20</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">4</column>
+            <column name="name">cordarone</column>
+            <column name="salt">Celexa</column>
+            <column name="price">20</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">5</column>
+            <column name="name">differin</column>
+            <column name="salt">Celexa</column>
+            <column name="price">9</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">6</column>
+            <column name="name">emla</column>
+            <column name="salt">Paracetamol</column>
+            <column name="price">8</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">7</column>
+            <column name="name">fiorinal</column>
+            <column name="salt">Nalfon</column>
+            <column name="price">7</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">8</column>
+            <column name="name">hydrea</column>
+            <column name="salt">Nalfon</column>
+            <column name="price">12</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">9</column>
+            <column name="name">inspra</column>
+            <column name="salt">Paracetamol</column>
+            <column name="price">13</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">10</column>
+            <column name="name">keppra</column>
+            <column name="salt">Paracetamol</column>
+            <column name="price">4</column>
+        </table>
+        <table name="medicines">
+            <column name="m_id">11</column>
+            <column name="name">zoloft</column>
+            <column name="salt">Nalfon</column>
+            <column name="price">5</column>
+        </table>
+        <!-- Table patients -->
+        <table name="patients">
+            <column name="p_id">1</column>
+            <column name="user">sherlock</column>
+            <column name="pass">1BEA3A3D4BC3BE1149A75B33FB8D82BC</column>
+            <column name="name">Sherlock Holmes</column>
+            <column name="email">sukhatmegaurav@gmail.com</column>
+            <column name="address">Madan Mahal</column>
+            <column name="phone">8224844487</column>
+            <column name="age">30</column>
+            <column name="wt">70</column>
+            <column name="sex">1</column>
+            <column name="aadhar">786</column>
+        </table>
+        <table name="patients">
+            <column name="p_id">463861</column>
+            <column name="user">sherlock</column>
+            <column name="pass">ba248c985ace94863880921d8900c53f</column>
+            <column name="name">Gaurav Sukhatme</column>
+            <column name="email">sukhatmegaurav@gmail.com</column>
+            <column name="address">H.no 1630, Punjab Bank Colony, Damoh Naka, near commercial typing institute</column>
+            <column name="phone">8224844487</column>
+            <column name="age">12</column>
+            <column name="wt">52</column>
+            <column name="sex">1</column>
+            <column name="aadhar">121</column>
+        </table>
+        <!-- Table prescriptions -->
+        <table name="prescriptions">
+            <column name="pr_id">996113</column>
+            <column name="p_id">634141</column>
+            <column name="doc_id">1</column>
+            <column name="qrcode">0e7a8963241611da87cb90d14cbf2a84</column>
+            <column name="arr_name">996113.json</column>
+            <column name="date_created">2019-04-17 12:59:53</column>
+        </table>
+        <table name="prescriptions">
+            <column name="pr_id">100894</column>
+            <column name="p_id">342023</column>
+            <column name="doc_id">1</column>
+            <column name="qrcode">eea39bab024382528d4d9ee6a1910fe3</column>
+            <column name="arr_name">100894.json</column>
+            <column name="date_created">2019-04-17 13:00:40</column>
+        </table>
+        <!-- Table stores -->
+        <table name="stores">
+            <column name="s_id">1</column>
+            <column name="name">Sewarth Healthcare</column>
+            <column name="address">MR-4 Rd, Vikas Nagar, Jabalpur, Madhya Pradesh 482001 </column>
+            <column name="LAT">23.1908441</column>
+            <column name="LON">79.9129951</column>
+            <column name="arr_med">inventory.json</column>
+            <column name="phone">07614072222</column>
+            <column name="homedelivery">1</column>
+        </table>
+        <table name="stores">
+            <column name="s_id">2</column>
+            <column name="name">Shri Shyam Medicos</column>
+            <column name="address">Gora Bazar, Cantt, Jabalpur, Madhya Pradesh 482011</column>
+            <column name="LAT">23.146456</column>
+            <column name="LON">79.958633</column>
+            <column name="arr_med">inventory.json</column>
+            <column name="phone">08656059121</column>
+            <column name="homedelivery">0</column>
+        </table>
+        <!-- Table waitlist -->
+    </database>
+</pma_xml_export>
